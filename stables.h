@@ -13,7 +13,16 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsLayoutItem>
+#include <QGraphicsSceneResizeEvent>
 #include <QWidget>
+#include <QLabel>
+
+#include <QObject>
+
+#include <QTimer>
+
+#include <QGridLayout>
+#include <QGraphicsLinearLayout>
 
 #include <QRegion>
 #include <QRect>

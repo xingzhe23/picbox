@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-const char* logFile = "d:\\picBox.log";
+static const char* logFile = "d:\\picBox.log";
 
 template<typename T1>
 void Logger(T1 v1)

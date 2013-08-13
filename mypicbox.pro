@@ -16,7 +16,12 @@ CONFIG += 	warn_on \
 
 # Input
 HEADERS += stables.h	\
-			MainFrame.h
+			MainFrame.h	\
+			WinUtil.h	\
+			Logger.h	\
+			RawPicLabelWidget.h
 #FORMS += ImageContainer.ui PictureWallMainWindow.ui
 SOURCES += main.cpp	\
-			MainFrame.cpp
+			MainFrame.cpp	\
+			WinUtil.cpp	\
+			RawPicLabelWidget.cpp

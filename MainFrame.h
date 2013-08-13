@@ -31,8 +31,11 @@ private:
 };
 
 
+class PicListWidget;
 class MainFrame : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     MainFrame();
     ~MainFrame();
@@ -44,12 +47,22 @@ public:
 public:
     virtual void drawBackground(QPainter *painter, const QRectF &rect);
 
+protected:
+    virtual void resizeEvent( QGraphicsSceneResizeEvent *event );
+    virtual bool event(QEvent* event);
+
 private:
     void init();
+
+public slots:
+    void onHeartBeat();
 
 private:
     QGraphicsScene*     m_pSence;
     BackGroundItem*     m_pBackgroundItem;
+    PicListWidget*      m_picList;
+    QTimer              m_Timer;
+
 };
 
 #endif

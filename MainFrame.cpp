@@ -1,12 +1,14 @@
 #include "MainFrame.h"
 #include "WinUtil.h"
 #include "Logger.h"
-#include "duidrawutil.h"
+#include "RawPicLabelWidget.h"
+//#include "duidrawutil.h"
 
 MainFrame::MainFrame(): QGraphicsView()
 {
     m_pSence = new QGraphicsScene(this);
     m_pBackgroundItem = new BackGroundItem;
+    m_picList = new PicListWidget;
     init();
 }
    
@@ -16,6 +18,8 @@ MainFrame::~MainFrame()
         delete m_pSence;
     if(m_pBackgroundItem)
         delete m_pBackgroundItem;
+    if(m_picList)
+        delete m_picList;
 }
 
 
@@ -50,7 +54,7 @@ QRegion MainFrame::calcFrameClipRegion( const QRect &rect )
 void MainFrame::drawBackground(QPainter *painter, const QRectF &rect)
 {
     //
-    QPixmap image(tr("tree.png"));
+    QPixmap image(tr("background.png"));
 
     Logger("tree.png, width/height=", image.width(), image.height());
     Logger("frame,  width/height=", this->rect().width(), this->rect().height());
@@ -62,6 +66,35 @@ void MainFrame::drawBackground(QPainter *painter, const QRectF &rect)
     //painter->setClipRegion(this->rect());
     painter->drawPixmap(rect.topLeft(), image);
 
+    //color,  pannel
+}
+
+void MainFrame::resizeEvent( QGraphicsSceneResizeEvent *event )
+{
+    Logger("MainFrame::resizeEvent, oldSize/newSize");
+}
+
+bool MainFrame::event(QEvent* event)
+{
+    //Logger(" MainFrame::event, event->type=", event->type());
+    return QGraphicsView::event(event);
+}
+
+void MainFrame::onHeartBeat()
+{
+    static int tick = 0;
+    Logger("MainFrame::onHeartBeat, tick =", tick);
+    tick++;
+
+    if(tick==1)
+    {
+        m_picList->addItem(tr("plante.png"));
+    }
+    else if(tick == 2)
+    {
+        //m_picList->addItem(tr("broad.png"));
+    }
+    //add image
 }
 
 void MainFrame::init()
@@ -79,7 +112,6 @@ void MainFrame::init()
     //foreground
 
     //set auto prefer size
-
 
     //font
 
@@ -103,5 +135,14 @@ void MainFrame::init()
     //this->setPreferredHeight(400.0);
     //this->setPreferredWidth(400.0);
     //Frame Margin
+
+
+    //timer
+    connect(&m_Timer, SIGNAL(timeout()), this, SLOT(onHeartBeat()));
+    //10s
+    //m_Timer.setSingleShot(false);
+    m_Timer.start(3*1000);
+
+    m_pSence->addItem(m_picList);
 }
 
